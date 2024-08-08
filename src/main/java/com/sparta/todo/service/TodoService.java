@@ -16,4 +16,9 @@ public class TodoService {
         Todo entity = new Todo(request);
         return TodoResponse.of(todoRepository.save(entity));
     }
+
+    public TodoResponse getTodo(long todoId) {
+        Todo entity = todoRepository.findById(todoId).orElseThrow();
+        return TodoResponse.of(entity);
+    }
 }

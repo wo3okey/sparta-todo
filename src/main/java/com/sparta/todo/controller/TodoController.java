@@ -5,6 +5,8 @@ import com.sparta.todo.dto.TodoResponse;
 import com.sparta.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,12 @@ public class TodoController {
     @PostMapping("/api/v1/todos")
     public ResponseEntity<TodoResponse> createTodo(@RequestBody TodoRequest request) {
         TodoResponse response = todoService.createTodo(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/api/v1/todos/{todoId}")
+    public ResponseEntity<TodoResponse> getTodo(@PathVariable long todoId) {
+        TodoResponse response = todoService.getTodo(todoId);
         return ResponseEntity.ok(response);
     }
 }
