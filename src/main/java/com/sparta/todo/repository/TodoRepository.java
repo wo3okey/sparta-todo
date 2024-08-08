@@ -3,13 +3,16 @@ package com.sparta.todo.repository;
 import com.sparta.todo.entity.Todo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,5 +37,23 @@ public class TodoRepository {
         entity.changeId(id);
 
         return entity;
+    }
+
+    public Optional<Todo> findById(Long id) {
+        List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", rowMapper(), id);
+        return result.stream().findFirst();
+    }
+
+    private RowMapper<Todo> rowMapper() {
+        return (rs, rowNum) -> {
+            return new Todo(
+                    rs.getLong("id"),
+                    rs.getString("todo"),
+                    rs.getString("manager_name"),
+                    rs.getString("password"),
+                    rs.getTimestamp("created_at").toLocalDateTime(),
+                    rs.getTimestamp("updated_at").toLocalDateTime()
+            );
+        };
     }
 }
