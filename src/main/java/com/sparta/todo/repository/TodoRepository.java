@@ -83,6 +83,11 @@ public class TodoRepository {
         jdbcTemplate.update(sql, params.toArray());
     }
 
+    public void delete(long todoId) {
+        String sql = "DELETE FROM todo WHERE id = ?";
+        jdbcTemplate.update(sql, todoId);
+    }
+
     private RowMapper<Todo> rowMapper() {
         return (rs, rowNum) -> {
             return new Todo(

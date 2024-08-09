@@ -5,6 +5,7 @@ import com.sparta.todo.dto.TodoResponse;
 import com.sparta.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,5 +49,13 @@ public class TodoController {
     ) {
         TodoResponse response = todoService.updateTodo(todoId, request);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/api/v1/todos/{todoId}")
+    public void deleteTodo(
+            @PathVariable long todoId,
+            @RequestBody TodoRequest request
+    ) {
+        todoService.deleteTodo(todoId, request);
     }
 }
