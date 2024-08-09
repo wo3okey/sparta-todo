@@ -5,8 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class TodoRequest {
-    private final String todo;
-    private final Long managerId;
-    private final String password;
+public class ManagerRequest {
+    private final String name;
+    private final String email;
 }
