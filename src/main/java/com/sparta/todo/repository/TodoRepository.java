@@ -72,6 +72,17 @@ public class TodoRepository {
         return jdbcTemplate.query(sql.toString(), rowMapper(), params.toArray());
     }
 
+    public void update(Todo entity) {
+        String sql = "UPDATE todo SET todo = ?, manager_name = ?, updated_at = NOW() WHERE id = ?";
+
+        List<String> params = new ArrayList<>();
+        params.add(entity.getTodo());
+        params.add(entity.getManagerName());
+        params.add(String.valueOf(entity.getId()));
+
+        jdbcTemplate.update(sql, params.toArray());
+    }
+
     private RowMapper<Todo> rowMapper() {
         return (rs, rowNum) -> {
             return new Todo(

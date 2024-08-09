@@ -29,5 +29,13 @@ public class Todo {
     public void changeId(long id) {
         this.id = id;
     }
+
+    public void changeTodo(String todo) {
+        this.todo = todo;
+    }
+
+    public void changeManagerName(String managerName) {
+        this.managerName = managerName;
+    }
 }
 
