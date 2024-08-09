@@ -66,7 +66,7 @@ public class TodoRepository {
         return result.stream().findFirst();
     }
 
-    public List<Todo> search(String date, String managerName) {
+    public List<Todo> search(String date, String managerName, int page, int size) {
         StringBuilder sql = new StringBuilder(
             """
                 SELECT 
@@ -104,6 +104,11 @@ public class TodoRepository {
         }
 
         sql.append(" ORDER BY t.updated_at DESC");
+
+        int offset = page * size;
+        sql.append(" LIMIT ? OFFSET ?");
+        params.add(size);
+        params.add(offset);
 
         return jdbcTemplate.query(sql.toString(), rowMapper(), params.toArray());
     }

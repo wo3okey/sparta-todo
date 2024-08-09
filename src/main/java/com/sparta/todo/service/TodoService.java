@@ -28,8 +28,8 @@ public class TodoService {
         return TodoResponse.of(entity);
     }
 
-    public List<TodoResponse> getTodos(String date, String managerName) {
-        List<Todo> entities = todoRepository.search(date, managerName);
+    public List<TodoResponse> getTodos(String date, String managerName, int page, int size) {
+        List<Todo> entities = todoRepository.search(date, managerName, page, size);
         return entities.stream()
                 .map(TodoResponse::of)
                 .collect(Collectors.toList());
