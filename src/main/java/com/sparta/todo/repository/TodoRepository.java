@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,6 +46,30 @@ public class TodoRepository {
     public Optional<Todo> findById(Long id) {
         List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", rowMapper(), id);
         return result.stream().findFirst();
+    }
+
+    public List<Todo> search(String date, String managerName) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM todo WHERE 1=1");
+        List<String> params = new ArrayList<>();
+
+        if (date != null) {
+            LocalDate searchDate = LocalDate.parse(date);
+            LocalDateTime startOfDay = searchDate.atTime(LocalTime.MIN);
+            LocalDateTime endOfDay = searchDate.atTime(LocalTime.MAX);
+
+            sql.append(" AND updated_at BETWEEN ? AND ?");
+            params.add(startOfDay.toString());
+            params.add(endOfDay.toString());
+        }
+
+        if (managerName != null) {
+            sql.append(" AND manager_name = ?");
+            params.add(managerName);
+        }
+
+        sql.append(" ORDER BY updated_at DESC");
+
+        return jdbcTemplate.query(sql.toString(), rowMapper(), params.toArray());
     }
 
     private RowMapper<Todo> rowMapper() {

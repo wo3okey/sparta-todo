@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +28,15 @@ public class TodoController {
     @GetMapping("/api/v1/todos/{todoId}")
     public ResponseEntity<TodoResponse> getTodo(@PathVariable long todoId) {
         TodoResponse response = todoService.getTodo(todoId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/api/v1/todos")
+    public ResponseEntity<List<TodoResponse>> getTodos(
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) String managerName
+    ) {
+        List<TodoResponse> response = todoService.getTodos(date, managerName);
         return ResponseEntity.ok(response);
     }
 }
