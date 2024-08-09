@@ -2,6 +2,7 @@ package com.sparta.todo.service;
 
 import com.sparta.todo.dto.TodoRequest;
 import com.sparta.todo.dto.TodoResponse;
+import com.sparta.todo.entity.Manager;
 import com.sparta.todo.entity.Todo;
 import com.sparta.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TodoService {
+    private final ManagerService managerService;
     private final TodoRepository todoRepository;
 
     public TodoResponse createTodo(TodoRequest request) {
-        Todo entity = new Todo(request);
+        Manager manager = managerService.getManagerEntity(request.getManagerId());
+        Todo entity = new Todo(request, manager);
         return TodoResponse.of(todoRepository.save(entity));
     }
 
@@ -42,8 +45,9 @@ public class TodoService {
             entity.changeTodo(request.getTodo());
         }
 
-        if (request.getManagerName() != null) {
-            entity.changeManagerName(request.getManagerName());
+        Manager manager = managerService.getManagerEntity(request.getManagerId());
+        if (manager != null) {
+            entity.changeManager(manager);
         }
 
         todoRepository.update(entity);

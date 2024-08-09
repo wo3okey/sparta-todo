@@ -1,6 +1,6 @@
 package com.sparta.todo.entity;
 
-import com.sparta.todo.dto.TodoRequest;
+import com.sparta.todo.dto.ManagerRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,18 +10,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Todo {
+public class Manager {
     private Long id;
-    private String todo;
-    private Manager manager;
-    private String password;
+    private String name;
+    private String email;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Todo(TodoRequest request, Manager manager) {
-        this.todo = request.getTodo();
-        this.manager = manager;
-        this.password = request.getPassword();
+    public Manager(ManagerRequest request) {
+        this.name = request.getName();
+        this.email = request.getEmail();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -30,12 +28,11 @@ public class Todo {
         this.id = id;
     }
 
-    public void changeTodo(String todo) {
-        this.todo = todo;
+    public void changeName(String name) {
+        this.name = name;
     }
 
-    public void changeManager(Manager manager) {
-        this.manager = manager;
+    public void changeEmail(String email) {
+        this.email = email;
     }
 }
-

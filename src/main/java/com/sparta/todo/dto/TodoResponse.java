@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 public class TodoResponse {
     private final long id;
     private final String todo;
+    private final long managerId;
     private final String managerName;
+    private final String managerEmail;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
@@ -19,7 +21,9 @@ public class TodoResponse {
         return new TodoResponse(
                 entity.getId(),
                 entity.getTodo(),
-                entity.getManagerName(),
+                entity.getManager().getId(),
+                entity.getManager().getName(),
+                entity.getManager().getEmail(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );
