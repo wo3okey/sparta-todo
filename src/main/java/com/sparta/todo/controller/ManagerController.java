@@ -3,6 +3,7 @@ package com.sparta.todo.controller;
 import com.sparta.todo.dto.ManagerRequest;
 import com.sparta.todo.dto.ManagerResponse;
 import com.sparta.todo.service.ManagerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +22,7 @@ public class ManagerController {
     private final ManagerService managerService;
 
     @PostMapping("/api/v1/managers")
-    public ResponseEntity<ManagerResponse> createManager(@RequestBody ManagerRequest request) {
+    public ResponseEntity<ManagerResponse> createManager(@RequestBody @Valid ManagerRequest request) {
         ManagerResponse response = managerService.createManager(request);
         return ResponseEntity.ok(response);
     }
