@@ -34,7 +34,7 @@ public class TodoController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/api/v2/todos")
+    @GetMapping("/api/v3/todos")
     public ResponseEntity<List<TodoResponse>> getTodos(
             @RequestParam(required = false) String date,
             @RequestParam(required = false) String managerName,
