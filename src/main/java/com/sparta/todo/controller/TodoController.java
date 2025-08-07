@@ -34,12 +34,12 @@ public class TodoController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/api/v1/todos")
+    @GetMapping("/api/v2/todos")
     public ResponseEntity<List<TodoResponse>> getTodos(
             @RequestParam(required = false) String date,
             @RequestParam(required = false) String managerName,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size
+            @RequestParam(defaultValue = "10") int size
     ) {
         List<TodoResponse> response = todoService.getTodos(date, managerName, page, size);
         return ResponseEntity.ok(response);
