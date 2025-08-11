@@ -45,7 +45,7 @@ public class TodoController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/api/v1/todos/{todoId}")
+    @PutMapping("/api/v2/todos/{todoId}")
     public ResponseEntity<TodoResponse> updateTodo(
             @PathVariable long todoId,
             @RequestBody TodoRequest request
