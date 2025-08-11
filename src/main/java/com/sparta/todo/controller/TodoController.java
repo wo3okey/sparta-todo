@@ -38,7 +38,7 @@ public class TodoController {
     public ResponseEntity<List<TodoResponse>> getTodos(
             @RequestParam(required = false) String date,
             @RequestParam(required = false) String managerName,
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
         List<TodoResponse> response = todoService.getTodos(date, managerName, page, size);
